@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <title>ShootingStar</title>
+        <style>
+            *{padding: 0;
+            margin: 0;
+            box-sizing: border-box;}
+
+            h1{text-decoration: brown;
+            position: relative;
+            text-align: center;
+            padding-top: 50px;
+            background-color: rgb(138, 155, 28);
+            font-size: 50px;
+            }
+            #canvas{text-decoration: chartreuse;}
+        </style>
+    </head>
+    <body>
+    <h1>The Shooting Star
+    <canvas id="canvas" width='1000' height='1000'>fhgcg</canvas>
+</h1>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+//C
+var Width = 1500; var Height = 1500;
+
+//Lets create an array of particles
+var particles = [];
+for(var i = 0; i < 100; i++)
+{
+	//This will add 50 particles to the array with random positions
+	particles.push(new create_particle());
+}
+
+//Lets create a function which will help us to create multiple particles
+function create_particle()
+{
+	//Random position on the canvas
+	this.x = Math.random()*Width;
+	this.y = Math.random()*Height;
+	
+	//Lets add random velocity to each particle
+	this.vx = Math.random()*20-10;
+	this.vy = Math.random()*20-10;
+	
+	//Random colors
+	var r = Math.random()*255>>0;
+	var g = Math.random()*255>>0;
+	var b = Math.random()*255>>0;
+	this.color = "rgba("+r+", "+g+", "+b+", 100)";
+	
+	//Random size
+	this.radius = Math.random()*40+10+1+0.5;
+}
+
+var x = 100; var y = 100;
+
+//Lets animate the particle
+function draw()
+{
+	//Moving this BG paint code insde draw() will help remove the trail
+	//of the particle
+	//Lets paint the canvas black
+	//But the BG paint shouldn't blend with the previous frame
+	ctx.globalCompositeOperation = "source-over";
+	
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, Width, Height);
+	
+
+	ctx.globalCompositeOperation = "lighter";
+	
+	for(var t = 0; t < particles.length; t++)
+	{
+		var p = particles[t];
+		
+		ctx.beginPath();
+		
+		var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+		gradient.addColorStop(0, "purple");
+		gradient.addColorStop(0.3, "white");
+		gradient.addColorStop(0.3, p.color);
+		gradient.addColorStop(1, "yellow");
+		
+		ctx.fillStyle = gradient;
+		ctx.arc(p.x, p.y, p.radius, Math.PI*2, false);
+		ctx.fill();
+		
+	
+		p.x += p.vx+5;
+		p.y += p.vy+5;
+		
+	
+		if(p.x < -50) p.x = Width;
+		if(p.y < -50) p.y = Height;
+		if(p.x > Width) p.x = -50;
+		if(p.y > Height) p.y = -50;
+	}
+}
+
+setInterval(draw, 33);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vqewre</title>
+</head>
+
+    <body>
+<script>
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+canvas.width = window.screen.width;
+canvas.height = window.screen.height;
+
+var context = canvas.getContext('2d');
+
+//context.fillStyle='red';
+
+//context.fillRect(10,0,150,100);
+//context.fillStyle='yellow';
+//context.fillRect(20,150,150,100);
+//context.ellipse(100,123,43,34);
+
+var x=0;
+var y=0;
+
+window.requestAnimationFrame(function loop() {
+    x++;
+    y+=0.5;
+
+    context.clearRect(0,0,canvas.width,canvas.height)
+
+ context.fillStyle='yellow';
+context.fillRect(x,0,150,100);
+context.fillStyle='yellow';
+context.fillRect(10,y,150,100); 
+
+window.requestAnimationFrame(loop);
+})
+</script>
+</body>
+</html>
